@@ -1,9 +1,9 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   // Function to get the value of a cookie by name
   function getCookie(name) {
     let cookieArray = document.cookie.split('; ');
     let cookie = cookieArray.find((row) => row.startsWith(name + '='));
-    return cookie ? cookie.split('=')[1] : null;
+    return cookie ? parseInt(cookie.split('=')[1]) : null;
   }
 
   // Function to set a cookie
@@ -15,9 +15,21 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   // 1. Get the value of the 'count' cookie
-  // 2. If the cookie exists, increment the value and update the cookie
-  // 3. If the cookie does not exist, create it and set the value to 1
-  // 4. Display the count on the webpage
+  let count = getCookie('count');
 
-  // your code here
+  // 2. If it doesn't exist, set it to 1. Otherwise, increment it.
+  if (count === null) {
+    count = 1;
+  } else {
+    count += 1;
+  }
+
+  // 3. Set the updated value back to the cookie
+  setCookie('count', count, 7); // expires in 7 days
+
+  // 4. Display the count on the page if the countDisplay element exists
+  const display = document.getElementById('countDisplay');
+  if (display) {
+    display.textContent = `You have visited ${count} times.`;
+  }
 });
